@@ -87,7 +87,6 @@
 
 <video id="bgVideo" autoplay muted loop>
   <source src="assets/Background.mp4" type="video/mp4">
-  Your browser does not support HTML5 video.
 </video>
 
 <div id="popup">
@@ -109,9 +108,8 @@
 
 <div id="footer">Designed by Sina Hesarki</div>
 
-<audio id="bgMusic" loop>
+<audio id="bgMusic" preload="auto" loop>
   <source src="assets/Bgmusic.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
 </audio>
 
 <script>
@@ -121,7 +119,14 @@
 
   continueBtn.addEventListener('click', () => {
     popup.style.display = 'none';
-    music.play().catch(e => console.log("User interaction required to play music"));
+
+    music.currentTime = 0;
+    music.volume = 1;
+
+    document.body.addEventListener('click', function playOnce() {
+      music.play();
+      document.body.removeEventListener('click', playOnce);
+    });
   });
 </script>
 
